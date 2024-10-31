@@ -11,9 +11,10 @@ public class AviaSoulsTest {
         manager.add(ticket2);
 
         Ticket[] found = manager.search("Moscow", "Dubai");
-        Assertions.assertEquals(2, found.length);
-        Assertions.assertEquals(300, found[0].getPrice()); // должен быть ticket2
-        Assertions.assertEquals(500, found[1].getPrice()); // должен быть ticket1
+
+        int [] expected = {2, 300, 500};
+        int [] actual = {found.length, found[0].getPrice(), found[1].getPrice()};
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -27,10 +28,10 @@ public class AviaSoulsTest {
         manager.add(ticket3);
 
         Ticket[] found = manager.search("Moscow", "Dubai");
-        Assertions.assertEquals(3, found.length);
-        Assertions.assertEquals(300, found[0].getPrice());
-        Assertions.assertEquals(400, found[1].getPrice());
-        Assertions.assertEquals(500, found[2].getPrice());
+
+        int [] expected = {3, 300, 400, 500};
+        int [] actual = {found.length, found[0].getPrice(), found[1].getPrice(), found[2].getPrice()};
+        Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -44,9 +45,11 @@ public class AviaSoulsTest {
         manager.add(ticket3);
 
         Ticket[] found = manager.searchAndSortBy("Moscow", "Dubai", new TicketTimeComparator());
-        Assertions.assertEquals(3, found.length);
-        Assertions.assertEquals(ticket1.getTimeTo() - ticket1.getTimeFrom(), found[0].getTimeTo() - found[0].getTimeFrom()); // 4 hours
-        Assertions.assertEquals(ticket3.getTimeTo() - ticket3.getTimeFrom(), found[1].getTimeTo() - found[1].getTimeFrom()); // 6 hours
-        Assertions.assertEquals(ticket2.getTimeTo() - ticket2.getTimeFrom(), found[2].getTimeTo() - found[2].getTimeFrom()); // 8 hours
+
+        int[] expected = {3, ticket1.getTimeTo() - ticket1.getTimeFrom(), ticket3.getTimeTo() - ticket3.getTimeFrom(),
+                ticket2.getTimeTo() - ticket2.getTimeFrom()};
+        int[] actual = {found.length, found[0].getTimeTo() - found[0].getTimeFrom(), found[1].getTimeTo() - found[1].getTimeFrom(),
+                found[2].getTimeTo() - found[2].getTimeFrom()};
+        Assertions.assertArrayEquals(expected, actual);
     }
 }
