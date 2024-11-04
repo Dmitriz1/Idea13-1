@@ -9,6 +9,7 @@ public class AviaSouls {
         for (int i = 0; i < current.length; i++) {
             tmp[i] = current[i];
         }
+
         tmp[tmp.length - 1] = ticket;
         return tmp;
     }
@@ -22,19 +23,20 @@ public class AviaSouls {
     }
 
     public Ticket[] search(String from, String to) {
-        Ticket[] result = new Ticket[0]; // массив для ответа
-        for (Ticket ticket : tickets) { // перебираем все билеты
+        Ticket[] result = new Ticket[0];
+        for (Ticket ticket : tickets) {
             if (ticket.getFrom().equals(from) && ticket.getTo().equals(to)) {
-                result = addToArray(result, ticket); // добавляем его в массив ответа
+                result = addToArray(result, ticket);
             }
         }
-        Arrays.sort(result); // сортируем по цене
+
+        Arrays.sort(result);
         return result;
     }
 
     public Ticket[] searchAndSortBy(String from, String to, Comparator<Ticket> comparator) {
-        Ticket[] result = search(from, to); // получаем отфильтрованные билеты
-        Arrays.sort(result, comparator); // сортируем по переданному компаратору
+        Ticket[] result = search(from, to);
+        Arrays.sort(result, comparator);
         return result;
     }
 }

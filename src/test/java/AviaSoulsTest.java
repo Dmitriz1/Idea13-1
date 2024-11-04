@@ -12,7 +12,7 @@ public class AviaSoulsTest {
 
         Ticket[] found = manager.search("Moscow", "Dubai");
 
-        int [] expected = {2, 300, 500};
+        int [] expected = {2, ticket2.getPrice(), ticket1.getPrice()};
         int [] actual = {found.length, found[0].getPrice(), found[1].getPrice()};
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -29,7 +29,7 @@ public class AviaSoulsTest {
 
         Ticket[] found = manager.search("Moscow", "Dubai");
 
-        int [] expected = {3, 300, 400, 500};
+        int [] expected = {3, ticket2.getPrice(), ticket3.getPrice(), ticket1.getPrice()};
         int [] actual = {found.length, found[0].getPrice(), found[1].getPrice(), found[2].getPrice()};
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -37,18 +37,20 @@ public class AviaSoulsTest {
     @Test
     public void testSortByFlightTime() {
         AviaSouls manager = new AviaSouls();
-        Ticket ticket1 = new Ticket("Moscow", "Dubai", 500, 10, 14); // 4 hours
-        Ticket ticket2 = new Ticket("Moscow", "Dubai", 300, 12, 20); // 8 hours
-        Ticket ticket3 = new Ticket("Moscow", "Dubai", 400, 10, 16); // 6 hours
+        Ticket ticket1 = new Ticket("Moscow", "Dubai", 500, 10, 14);
+        Ticket ticket2 = new Ticket("Moscow", "Dubai", 300, 12, 20);
+        Ticket ticket3 = new Ticket("Moscow", "Dubai", 400, 10, 16);
         manager.add(ticket1);
         manager.add(ticket2);
         manager.add(ticket3);
 
         Ticket[] found = manager.searchAndSortBy("Moscow", "Dubai", new TicketTimeComparator());
 
-        int[] expected = {3, ticket1.getTimeTo() - ticket1.getTimeFrom(), ticket3.getTimeTo() - ticket3.getTimeFrom(),
+        int[] expected = {3, ticket1.getTimeTo() - ticket1.getTimeFrom(),
+                ticket3.getTimeTo() - ticket3.getTimeFrom(),
                 ticket2.getTimeTo() - ticket2.getTimeFrom()};
-        int[] actual = {found.length, found[0].getTimeTo() - found[0].getTimeFrom(), found[1].getTimeTo() - found[1].getTimeFrom(),
+        int[] actual = {found.length, found[0].getTimeTo() - found[0].getTimeFrom(),
+                found[1].getTimeTo() - found[1].getTimeFrom(),
                 found[2].getTimeTo() - found[2].getTimeFrom()};
         Assertions.assertArrayEquals(expected, actual);
     }

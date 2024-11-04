@@ -42,10 +42,16 @@ public class Ticket implements Comparable<Ticket> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
         Ticket ticket = (Ticket) o;
-        return price == ticket.price && timeFrom == ticket.timeFrom && timeTo == ticket.timeTo && from.equals(ticket.from) && to.equals(ticket.to);
+        return price == ticket.price && timeFrom == ticket.timeFrom && timeTo == ticket.timeTo &&
+                from.equals(ticket.from) && to.equals(ticket.to);
     }
 
     @Override
